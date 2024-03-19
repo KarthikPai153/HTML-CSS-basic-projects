@@ -5,6 +5,9 @@ const moles = document.querySelectorAll(".mole");
 const startBtn = document.querySelector(".start-btn");
 const levels = document.querySelector(".levels");
 const game = document.querySelector(".game");
+const cursor = document.querySelector('.cursor');
+
+const sound = new Audio("assets_smash.mp3"); // Add your sound file path here
 
 let lastHole;
 let timeUp = false;
@@ -90,7 +93,20 @@ function hitTheMole(e) {
   score++;
   this.parentNode.classList.remove("up");
   scoreBoard.textContent = score;
+  sound.play(); // Play the sound effect
 }
 
 // Adding the click event listener to all the moles
 moles.forEach((mole) => mole.addEventListener("click", hitTheMole));
+
+// Mouse event listeners for the cursor
+window.addEventListener('mousemove', e => {
+  cursor.style.top = e.pageY + 'px';
+  cursor.style.left = e.pageX + 'px';
+});
+window.addEventListener('mousedown', () => {
+  cursor.classList.add('active');
+});
+window.addEventListener('mouseup', () => {
+  cursor.classList.remove('active');
+});
